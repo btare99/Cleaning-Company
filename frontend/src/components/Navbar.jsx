@@ -2,6 +2,7 @@
 import { useState, useEffect } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import { Sparkles, ArrowRight, X, Phone } from 'lucide-react'
+import logo from '../images/lalas-logo.jpg'
 import '../styles/navbar.css'
 
 export default function Navbar() {
@@ -32,7 +33,7 @@ export default function Navbar() {
           {/* Logo */}
           <Link to="/" className="navbar-logo" onClick={close}>
             <div className="navbar-logo-mark">
-              <img src="src\images\lalas-logo.jpg" alt="Lalas Cleaning" />
+              <img src={logo} alt="Lalas Cleaning" />
             </div>
             <span>Lala's Cleaning</span>
           </Link>
