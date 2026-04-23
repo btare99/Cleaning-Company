@@ -1,5 +1,5 @@
 import { Phone, Mail, MapPin, Facebook, Linkedin, Twitter , Instagram } from 'lucide-react'
-import '../styles/Footer.css'
+import '../styles/footer.css'
 
 export default function Footer() {
   return (
