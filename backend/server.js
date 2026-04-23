@@ -11,7 +11,7 @@ import {
   getAdminBookingNotification,
   getAdminContactNotification,
   testEmailConnection
-} from "./utils/email.js";
+} from "./utils/Email.js";
 
 dotenv.config();
 
