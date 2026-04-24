@@ -2,6 +2,9 @@ import { useState } from 'react'
 import '../styles/BookingForm.css'
 
 export default function BookingForm() {
+
+  const API = import.meta.env.VITE_API_URL;
+
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -30,6 +33,7 @@ export default function BookingForm() {
       [name]: value
     }))
   }
+  console.log(import.meta.env.VITE_API_URL);
 
   const handleSubmit = async (e) => {
     e.preventDefault()
@@ -38,7 +42,7 @@ export default function BookingForm() {
     setSuccessMessage('')
 
     try {
-      const response = await fetch('http://localhost:5000/api/bookings', {
+      const response = await fetch(`${API}/api/bookings`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'

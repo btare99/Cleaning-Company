@@ -3,6 +3,9 @@ import { Phone, Mail, MapPin, Instagram, Send, CheckCircle, AlertCircle, Clock, 
 import '../styles/contact.css'
 
 export default function Contact() {
+
+  const API = import.meta.env.VITE_API_URL;
+
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -30,7 +33,7 @@ export default function Contact() {
     setSuccessMessage('')
 
     try {
-      const response = await fetch('http://localhost:5000/api/contact', {
+      const response = await fetch(`${API}/api/contact`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
