@@ -1,105 +1,117 @@
-import { useState } from 'react'
-import { Phone, Mail, MapPin, Instagram, Send, CheckCircle, AlertCircle, Clock, ArrowRight } from 'lucide-react'
-import '../styles/contact.css'
+import { useState } from "react";
+import {
+  Phone,
+  Mail,
+  MapPin,
+  Instagram,
+  Send,
+  CheckCircle,
+  AlertCircle,
+  Clock,
+  ArrowRight,
+} from "lucide-react";
+import "../styles/contact.css";
 
 export default function Contact() {
-
   const API = import.meta.env.VITE_API_URL;
 
   const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    phone: '',
-    subject: '',
-    message: ''
-  })
-  const [loading, setLoading] = useState(false)
-  const [successMessage, setSuccessMessage] = useState('')
-  const [errorMessage, setErrorMessage] = useState('')
-  const [focusedField, setFocusedField] = useState(null)
+    name: "",
+    email: "",
+    phone: "",
+    subject: "",
+    message: "",
+  });
+  const [loading, setLoading] = useState(false);
+  const [successMessage, setSuccessMessage] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
+  const [focusedField, setFocusedField] = useState(null);
 
   const handleChange = (e) => {
-    const { name, value } = e.target
-    setFormData(prev => ({
+    const { name, value } = e.target;
+    setFormData((prev) => ({
       ...prev,
-      [name]: value
-    }))
-  }
+      [name]: value,
+    }));
+  };
 
   const handleSubmit = async (e) => {
-    e.preventDefault()
-    setLoading(true)
-    setErrorMessage('')
-    setSuccessMessage('')
+    e.preventDefault();
+    setLoading(true);
+    setErrorMessage("");
+    setSuccessMessage("");
 
     try {
       const response = await fetch(`${API}/api/contact`, {
-        method: 'POST',
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json'
+          "Content-Type": "application/json",
         },
-        body: JSON.stringify(formData)
-      })
+        body: JSON.stringify(formData),
+      });
 
-      const data = await response.json()
+      const data = await response.json();
 
       if (!response.ok) {
-        throw new Error(data.error || 'Failed to submit contact form')
+        throw new Error(data.error || "Failed to submit contact form");
       }
 
-      setSuccessMessage('Message sent successfully! We will get back to you soon.')
+      setSuccessMessage(
+        "Message sent successfully! We will get back to you soon.",
+      );
       setFormData({
-        name: '',
-        email: '',
-        phone: '',
-        subject: '',
-        message: ''
-      })
+        name: "",
+        email: "",
+        phone: "",
+        subject: "",
+        message: "",
+      });
 
-      setTimeout(() => setSuccessMessage(''), 5000)
+      setTimeout(() => setSuccessMessage(""), 5000);
     } catch (error) {
-      console.error('Error:', error)
-      setErrorMessage(error.message || 'Failed to send message. Please try again.')
-      setTimeout(() => setErrorMessage(''), 5000)
+      console.error("Error:", error);
+      setErrorMessage(
+        error.message || "Failed to send message. Please try again.",
+      );
+      setTimeout(() => setErrorMessage(""), 5000);
     } finally {
-      setLoading(false)
+      setLoading(false);
     }
-  }
+  };
 
   const contactCards = [
     {
       icon: <Phone size={20} />,
-      label: 'Phone',
-      value: '+355 69 441 4819',
-      sub: 'Mon – Sat, 8am – 6pm',
-      color: 'green'
+      label: "Telefoni",
+      value: "+355 69 441 4819",
+      sub: "Në shërbim 24/7, çdo ditë të javës",
+      color: "green",
     },
     {
       icon: <Instagram size={20} />,
-      label: 'Instagram',
-      value: 'lalas.pastrim.shtepie',
-      sub: 'DM us anytime',
-      color: 'purple'
+      label: "Instagram",
+      value: "lalas.pastrim.shtepie",
+      sub: "Na shkruani në çdo kohë",
+      color: "purple",
     },
     {
       icon: <MapPin size={20} />,
-      label: 'Location',
-      value: 'Tirana, Albania',
-      sub: 'Available city-wide',
-      color: 'blue'
+      label: "Adresa",
+      value: "Tirana, Albania",
+      sub: "Shërbim në të gjithë Shqipërinë",
+      color: "blue",
     },
     {
       icon: <Clock size={20} />,
-      label: 'Working Hours',
-      value: 'Mon – Sat',
-      sub: '8:00 AM – 6:00 PM',
-      color: 'amber'
-    }
-  ]
+      label: "Orari i punës",
+      value: "Çdo ditë e javës",
+      sub: "08:00 – 18:00",
+      color: "amber",
+    },
+  ];
 
   return (
     <div className="contact-page">
-
       {/* ── Hero ── */}
       <section className="contact-hero">
         <div className="contact-hero-bg" aria-hidden="true">
@@ -110,14 +122,15 @@ export default function Contact() {
         <div className="contact-hero-content">
           <span className="contact-badge">
             <span className="contact-badge-dot" />
-            Contact Us
+            Na kontaktoni
           </span>
           <h1 className="contact-hero-title">
-            Let's Start a <br />
-            <span className="contact-hero-highlight">Conversation</span>
+            Çdo projekt fillon me një mesazh <br />
+            <span className="contact-hero-highlight">Na kontaktoni</span>
           </h1>
           <p className="contact-hero-sub">
-            Have a question or ready to book? We're here to help — reach out and we'll respond within 24 hours.
+            Keni pyetje apo dëshironi të rezervoni? Na kontaktoni — do t’ju
+            përgjigjemi brenda 24 orëve.
           </p>
           <div className="contact-hero-scroll" aria-hidden="true">
             <span />
@@ -145,16 +158,18 @@ export default function Contact() {
       {/* ── Main Content ── */}
       <section className="contact-main">
         <div className="contact-main-inner">
-
           {/* Left sidebar */}
           <div className="contact-sidebar">
             <div className="contact-sidebar-card">
               <div className="contact-sidebar-icon-wrap">
                 <Mail size={22} />
               </div>
-              <h2 className="contact-sidebar-title">Send Us a <br /> Message</h2>
+              <h2 className="contact-sidebar-title">
+                Na dërgoni një <br /> mesazh
+              </h2>
               <p className="contact-sidebar-desc">
-                Fill out the form and our team will get back to you within 24 hours, Monday through Saturday.
+                Plotësoni formularin dhe ekipi ynë do t’ju përgjigjet brenda 24
+                orëve, çdo ditë të javës.
               </p>
 
               <div className="contact-sidebar-divider" />
@@ -162,19 +177,19 @@ export default function Contact() {
               <ul className="contact-sidebar-bullets">
                 <li>
                   <span className="bullet-dot" />
-                  Fast response within 24h
+                  Përgjigje e shpejtë brenda 24 orësh
                 </li>
                 <li>
                   <span className="bullet-dot" />
-                  Free cleaning estimate
+                  Pastrim i detajuar për çdo hapësirë
                 </li>
                 <li>
                   <span className="bullet-dot" />
-                  Flexible scheduling
+                  Orar fleksibël
                 </li>
                 <li>
                   <span className="bullet-dot" />
-                  Professional & certified team
+                  Staf profesional dhe i trajnuar
                 </li>
               </ul>
             </div>
@@ -182,8 +197,10 @@ export default function Contact() {
             <div className="contact-sidebar-note">
               <div className="contact-sidebar-note-top" />
               <p>
-                <strong>Urgent?</strong> Call us directly at{' '}
-                <a href="tel:+355694414819" className="contact-phone-link">+355 69 441 4819</a>
+                <strong>Keni nevojë urgjente?</strong> Na telefononi direkt në{" "}
+                <a href="tel:+355694414819" className="contact-phone-link">
+                  +355 69 441 4819
+                </a>
               </p>
             </div>
           </div>
@@ -191,32 +208,35 @@ export default function Contact() {
           {/* Form */}
           <div className="contact-form-wrapper">
             <form className="contact-form" onSubmit={handleSubmit} noValidate>
-
               <div className="contact-form-row">
-                <div className={`contact-field ${focusedField === 'name' ? 'is-focused' : ''} ${formData.name ? 'has-value' : ''}`}>
-                  <label htmlFor="name">Full Name</label>
+                <div
+                  className={`contact-field ${focusedField === "name" ? "is-focused" : ""} ${formData.name ? "has-value" : ""}`}
+                >
+                  <label htmlFor="name">Emri i plotë</label>
                   <input
                     type="text"
                     id="name"
                     name="name"
                     value={formData.name}
                     onChange={handleChange}
-                    onFocus={() => setFocusedField('name')}
+                    onFocus={() => setFocusedField("name")}
                     onBlur={() => setFocusedField(null)}
-                    placeholder="Your full name"
+                    placeholder="Emrin tuaj të plotë"
                     required
                   />
                 </div>
 
-                <div className={`contact-field ${focusedField === 'email' ? 'is-focused' : ''} ${formData.email ? 'has-value' : ''}`}>
-                  <label htmlFor="email">Email Address</label>
+                <div
+                  className={`contact-field ${focusedField === "email" ? "is-focused" : ""} ${formData.email ? "has-value" : ""}`}
+                >
+                  <label htmlFor="email">Adresa e Email-it</label>
                   <input
                     type="email"
                     id="email"
                     name="email"
                     value={formData.email}
                     onChange={handleChange}
-                    onFocus={() => setFocusedField('email')}
+                    onFocus={() => setFocusedField("email")}
                     onBlur={() => setFocusedField(null)}
                     placeholder="you@example.com"
                     required
@@ -225,68 +245,76 @@ export default function Contact() {
               </div>
 
               <div className="contact-form-row">
-                <div className={`contact-field ${focusedField === 'phone' ? 'is-focused' : ''} ${formData.phone ? 'has-value' : ''}`}>
-                  <label htmlFor="phone">Phone Number</label>
+                <div
+                  className={`contact-field ${focusedField === "phone" ? "is-focused" : ""} ${formData.phone ? "has-value" : ""}`}
+                >
+                  <label htmlFor="phone">Numri i telefonit</label>
                   <input
                     type="tel"
                     id="phone"
                     name="phone"
                     value={formData.phone}
                     onChange={handleChange}
-                    onFocus={() => setFocusedField('phone')}
+                    onFocus={() => setFocusedField("phone")}
                     onBlur={() => setFocusedField(null)}
                     placeholder="+355 6X XXX XXXX"
                     required
                   />
                 </div>
 
-                <div className={`contact-field ${focusedField === 'subject' ? 'is-focused' : ''} ${formData.subject ? 'has-value' : ''}`}>
-                  <label htmlFor="subject">Subject</label>
+                <div
+                  className={`contact-field ${focusedField === "subject" ? "is-focused" : ""} ${formData.subject ? "has-value" : ""}`}
+                >
+                  <label htmlFor="subject">Arsyeja e kontaktit</label>
                   <input
                     type="text"
                     id="subject"
                     name="subject"
                     value={formData.subject}
                     onChange={handleChange}
-                    onFocus={() => setFocusedField('subject')}
+                    onFocus={() => setFocusedField("subject")}
                     onBlur={() => setFocusedField(null)}
-                    placeholder="How can we help?"
+                    placeholder="Si mund t’ju ndihmojmë?"
                     required
                   />
                 </div>
               </div>
 
-              <div className={`contact-field contact-field--full ${focusedField === 'message' ? 'is-focused' : ''} ${formData.message ? 'has-value' : ''}`}>
-                <label htmlFor="message">Your Message</label>
+              <div
+                className={`contact-field contact-field--full ${focusedField === "message" ? "is-focused" : ""} ${formData.message ? "has-value" : ""}`}
+              >
+                <label htmlFor="message">Mesazhi juaj</label>
                 <textarea
                   id="message"
                   name="message"
                   value={formData.message}
                   onChange={handleChange}
-                  onFocus={() => setFocusedField('message')}
+                  onFocus={() => setFocusedField("message")}
                   onBlur={() => setFocusedField(null)}
-                  placeholder="Tell us more about what you need..."
+                  placeholder="Na tregoni më shumë për atë që ju nevojitet…"
                   required
                 />
               </div>
 
-              <button type="submit" className="contact-submit" disabled={loading}>
+              <button
+                type="submit"
+                className="contact-submit"
+                disabled={loading}
+              >
                 {loading ? (
                   <>
                     <span className="contact-spinner" />
-                    Sending...
+                    Duke dërguar...
                   </>
                 ) : (
                   <>
                     <Send size={16} />
-                    Send Message
+                    Dërgo
                   </>
                 )}
               </button>
-
             </form>
           </div>
-
         </div>
       </section>
 
@@ -303,7 +331,6 @@ export default function Contact() {
           <span>{errorMessage}</span>
         </div>
       )}
-
     </div>
-  )
+  );
 }

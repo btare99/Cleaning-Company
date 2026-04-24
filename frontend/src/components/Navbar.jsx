@@ -113,9 +113,9 @@ export default function Navbar() {
           <Link to="/services" className="drawer-cta" onClick={close}>
             Rezervo Tani <ArrowRight size={14} />
           </Link>
-          <a href="tel:+35569123456" className="drawer-phone">
+          <a href="tel:+355694414819" className="drawer-phone">
             <Phone size={13} />
-            +355 69 123 4567
+            +355 69 441 4819
           </a>
         </div>
 

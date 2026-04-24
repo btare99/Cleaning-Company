@@ -81,20 +81,20 @@ export default function BookingForm() {
 
   return (
     <div className="booking-form-container">
-      <h2>Book Our Service</h2>
-      <p className="booking-form-subtitle">Schedule your cleaning service in just a few steps</p>
+      <h2>Rezervo tani</h2>
+      <p className="booking-form-subtitle">Rezervo pastrimin në vetëm disa hapa</p>
       
       <form onSubmit={handleSubmit}>
         <div className="form-grid">
           <div className="form-group">
-            <label htmlFor="name">Name *</label>
+            <label htmlFor="name">Emri *</label>
             <input
               type="text"
               id="name"
               name="name"
               value={formData.name}
               onChange={handleChange}
-              placeholder="Your name"
+              placeholder="Emri juaj"
               required
             />
           </div>
@@ -106,24 +106,24 @@ export default function BookingForm() {
               name="email"
               value={formData.email}
               onChange={handleChange}
-              placeholder="Your email"
+              placeholder="Emaili juaj"
               required
             />
           </div>
           <div className="form-group">
-            <label htmlFor="phone">Phone *</label>
+            <label htmlFor="phone">Telefoni *</label>
             <input
               type="tel"
               id="phone"
               name="phone"
               value={formData.phone}
               onChange={handleChange}
-              placeholder="Your phone number"
+              placeholder="Numri i telefonit tuaj"
               required
             />
           </div>
           <div className="form-group">
-            <label htmlFor="service">Service *</label>
+            <label htmlFor="service">Lloji i shërbimit *</label>
             <select
               id="service"
               name="service"
@@ -139,7 +139,7 @@ export default function BookingForm() {
             </select>
           </div>
           <div className="form-group">
-            <label htmlFor="date">Date *</label>
+            <label htmlFor="date">Data *</label>
             <input
               type="date"
               id="date"
@@ -150,7 +150,7 @@ export default function BookingForm() {
             />
           </div>
           <div className="form-group">
-            <label htmlFor="time">Time *</label>
+            <label htmlFor="time">Koha *</label>
             <input
               type="time"
               id="time"
@@ -161,33 +161,33 @@ export default function BookingForm() {
             />
           </div>
           <div className="form-group">
-            <label htmlFor="area">Area (m²) *</label>
+            <label htmlFor="area">Siperfaqja (m²) *</label>
             <input
               type="number"
               id="area"
               name="area"
               value={formData.area}
               onChange={handleChange}
-              placeholder="Square meters"
+              placeholder="Siperfaqja në m²"
               min="1"
               required
             />
           </div>
           <div className="form-group full-width">
-            <label htmlFor="notes">Additional Notes</label>
+            <label htmlFor="notes">Shënimet e Shtesë</label>
             <textarea
               id="notes"
               name="notes"
               value={formData.notes}
               onChange={handleChange}
-              placeholder="Any special requests or notes..."
+              placeholder="Cilësi të veçanta ose shënimet..."
             />
           </div>
         </div>
         <button type="submit" className="submit-button" disabled={loading}>
-          {loading ? 'Submitting...' : 'Book Now'}
+          {loading ? 'Duke u dërguar...' : 'Rezervo'}
         </button>
-        <p className="form-notice">We'll confirm your booking within 24 hours</p>
+        <p className="form-notice">Ne do t'konfirmojme rezervimin tuaj brenda 24 orësh</p>
       </form>
 
       {successMessage && <div className="success-message">{successMessage}</div>}

@@ -7,7 +7,7 @@ export default function Footer() {
       <div className="footer-container">
         <div className="footer-section">
           <h3>Lalas Cleaning</h3>
-          <p>Professional cleaning services for your home and office</p>
+          <p>Shërbime profesionale pastrimi për shtëpinë dhe zyrën tuaj</p>
           <div className="social-links">
             <a href="#" aria-label="Facebook"><Facebook size={20} /></a>
             <a href="#" aria-label="LinkedIn"><Linkedin size={20} /></a>
@@ -16,17 +16,17 @@ export default function Footer() {
         </div>
 
         <div className="footer-section">
-          <h4>Quick Links</h4>
+          <h4>Menu e shpejtë</h4>
           <ul>
-            <li><a href="/">Home</a></li>
-            <li><a href="/about">About</a></li>
-            <li><a href="/services">Services</a></li>
-            <li><a href="/contact">Contact</a></li>
+            <li><a href="/">Ballina</a></li>
+            <li><a href="/about">Rreth Nesh</a></li>
+            <li><a href="/services">Shërbimet</a></li>
+            <li><a href="/contact">Kontakti</a></li>
           </ul>
         </div>
 
         <div className="footer-section">
-          <h4>Services</h4>
+          <h4>Shërbimet</h4>
           <ul>
             <li><a href="/services">Pastrim Gjeneral</a></li>
             <li><a href="/services">Larje xhamash</a></li>
@@ -36,7 +36,7 @@ export default function Footer() {
         </div>
 
         <div className="footer-section">
-          <h4>Contact Us</h4>
+          <h4>Na Kontaktoni</h4>
           <div className="contact-info">
             <div className="contact-item">
               <Phone size={18} />
@@ -48,7 +48,7 @@ export default function Footer() {
               </div>
             <div className="contact-item">
               <Mail size={18} />
-              <span>info@lalascleaning.com</span>
+              <span>lalas.pastrim.shtepie@gmail.com</span>
             </div>
               <div className="contact-item">
                 <MapPin size={18} />
