@@ -4,6 +4,7 @@ import '../styles/BookingForm.css'
 export default function BookingForm() {
 
   const API = import.meta.env.VITE_API_URL;
+  console.log('API URL:', API); // Debugging line to check the API URL being used
 
   const [formData, setFormData] = useState({
     name: '',

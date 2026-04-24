@@ -37,6 +37,7 @@ const services = [
   { num: "04", title: "Carpet Cleaning", desc: "Pastrim i specializuar i tapeteve dhe mobiljeve" },
 ];
 
+
 export default function Home() {
   return (
     <div className="home-page">
