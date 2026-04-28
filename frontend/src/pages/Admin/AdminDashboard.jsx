@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import './AdminDashboard.css';
 
-const API_URL = '/api';
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
 
 /* ── tiny sparkline bar ── */
 const MiniBar = ({ value, max, color }) => (
@@ -52,8 +52,8 @@ export default function AdminDashboard() {
     setLoading(true);
     try {
       const [bRes, cRes] = await Promise.all([
-        axios.get(`${API_URL}/bookings`),
-        axios.get(`${API_URL}/contacts`),
+        axios.get(`${API_URL}/api/bookings`),
+        axios.get(`${API_URL}/api/contacts`),
       ]);
       setBookings(bRes.data.bookings);
       setContacts(cRes.data.contacts);
@@ -94,7 +94,6 @@ export default function AdminDashboard() {
     completed: { label: 'Kompletuar', color: '#6366f1' },
   };
 
-  /* ══════════════ LOGIN ══════════════ */
   if (!isAuthenticated) {
     return (
       <div className="ad-login-bg">
@@ -138,11 +137,8 @@ export default function AdminDashboard() {
     );
   }
 
-  /* ══════════════ DASHBOARD ══════════════ */
   return (
     <div className="ad-root">
-
-      {/* ── Sidebar ── */}
       <aside className="ad-sidebar">
         <div className="ad-sidebar__brand">
           <div className="ad-brand-icon">
@@ -192,10 +188,7 @@ export default function AdminDashboard() {
         </div>
       </aside>
 
-      {/* ── Main ── */}
       <main className="ad-main">
-
-        {/* topbar */}
         <header className="ad-topbar">
           <div>
             <h1 className="ad-topbar__title">
@@ -229,7 +222,6 @@ export default function AdminDashboard() {
           </div>
         </header>
 
-        {/* stats row (bookings only) */}
         {activeTab === 'bookings' && !loading && (
           <div className="ad-stats">
             <StatCard label="Gjithsej" value={bookings.length} sub="rezervime" accent="#6366f1" />
@@ -239,7 +231,6 @@ export default function AdminDashboard() {
           </div>
         )}
 
-        {/* content */}
         <div className="ad-content">
           {loading ? (
             <div className="ad-loading">
@@ -247,7 +238,6 @@ export default function AdminDashboard() {
               <span>Duke ngarkuar të dhënat…</span>
             </div>
           ) : activeTab === 'bookings' ? (
-
             <div className="ad-table-wrap">
               <div className="ad-table-toolbar">
                 <span className="ad-table-count">{filteredBookings.length} rezultate</span>
@@ -307,9 +297,7 @@ export default function AdminDashboard() {
                 </tbody>
               </table>
             </div>
-
           ) : (
-
             <div className="ad-cards-grid">
               {filteredContacts.map((c, i) => (
                 <div key={c._id} className="ad-msg-card" style={{ animationDelay: `${i * 0.05}s` }}>
@@ -331,7 +319,6 @@ export default function AdminDashboard() {
                 <div className="ad-empty ad-empty--full">Nuk ka mesazhe</div>
               )}
             </div>
-
           )}
         </div>
       </main>
