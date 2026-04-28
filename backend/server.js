@@ -239,6 +239,14 @@ app.get('/api/services', (req, res) => {
   })
 })
 
+// 404 handler for API routes
+app.use('/api/*', (req, res) => {
+  res.status(404).json({
+    success: false,
+    error: `Rruga e API-së ${req.originalUrl} nuk u gjet`
+  });
+});
+
 // Error handling middleware
 app.use((err, req, res, next) => {
   console.error('✗ Error:', err)
