@@ -13,7 +13,7 @@ import {
 import "../styles/contact.css";
 
 export default function Contact() {
-  const API = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+  const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
 
   const [formData, setFormData] = useState({
     name: "",
@@ -42,7 +42,7 @@ export default function Contact() {
     setSuccessMessage("");
 
     try {
-      const response = await fetch(`${API}/api/contact`, {
+      const response = await fetch(`${API_URL}/api/contacts`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

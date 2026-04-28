@@ -167,6 +167,41 @@ app.get('/api/bookings', async (req, res) => {
 })
 
 // GET all contacts (admin endpoint)
+// POST contact form
+app.post("/api/contacts", async (req, res) => {
+  try {
+    const { name, email, phone, subject, message } = req.body;
+
+    if (!name || !email || !message) {
+      return res.status(400).json({ success: false, error: 'Emri, emaili dhe mesazhi janë të detyrueshme' });
+    }
+
+    const newContact = new Contact({
+      name,
+      email,
+      phone,
+      subject,
+      message,
+      createdAt: new Date()
+    });
+
+    const savedContact = await newContact.save();
+    console.log("✓ Mesazh i ri u ruajt:", savedContact._id);
+
+    // Dërgimi i email-it (mund të shtohet logjika këtu nëse dëshironi)
+
+    res.status(201).json({
+      success: true,
+      message: "Mesazhi u dërgua me sukses!",
+      contact: savedContact
+    });
+
+  } catch (error) {
+    console.error("✗ Gabim në ruajtjen e kontaktit:", error);
+    res.status(500).json({ success: false, error: 'Dështoi dërgimi i mesazhit' });
+  }
+});
+
 app.get('/api/contacts', async (req, res) => {
   try {
     const contacts = await Contact.find().sort({ createdAt: -1 });
