@@ -2,11 +2,11 @@ import express from 'express'
 import cors from 'cors'
 import mongoose from "mongoose";
 import dotenv from 'dotenv'
-import Booking from "./models/Bookings.js";
-import Contact from "./models/Contacts.js";
-import { 
-  transporter, 
-  getBookingConfirmationEmail, 
+import Booking from "./api/Bookings.js";
+import Contact from "./api/Contacts.js";
+import {
+  transporter,
+  getBookingConfirmationEmail,
   getContactReplyEmail,
   getAdminBookingNotification,
   getAdminContactNotification,
@@ -45,18 +45,18 @@ app.post('/api/contact', async (req, res) => {
 
     // Validim i fushave
     if (!name || !email || !phone || !subject || !message) {
-      return res.status(400).json({ 
+      return res.status(400).json({
         success: false,
-        error: 'Të gjitha fushat janë të detyrueshme' 
+        error: 'Të gjitha fushat janë të detyrueshme'
       });
     }
 
     // Validim i formatit të emailit
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(email)) {
-      return res.status(400).json({ 
+      return res.status(400).json({
         success: false,
-        error: 'Formati i emailit nuk është i vlefshëm' 
+        error: 'Formati i emailit nuk është i vlefshëm'
       });
     }
 
@@ -96,9 +96,9 @@ app.post('/api/contact', async (req, res) => {
 
   } catch (error) {
     console.error('✗ Gabim në përpunimin e kontaktit:', error);
-    res.status(500).json({ 
+    res.status(500).json({
       success: false,
-      error: 'Dështo përpunimi i formës. Ju lutem, përpiquni përsëri më vonë.' 
+      error: 'Dështo përpunimi i formës. Ju lutem, përpiquni përsëri më vonë.'
     });
   }
 });
@@ -159,49 +159,14 @@ app.get('/api/bookings', async (req, res) => {
       bookings: bookings
     });
   } catch (error) {
-    res.status(500).json({ 
+    res.status(500).json({
       success: false,
-      error: 'Dështo marrja e rezervimeve' 
+      error: 'Dështo marrja e rezervimeve'
     });
   }
 })
 
 // GET all contacts (admin endpoint)
-// POST contact form
-app.post("/api/contacts", async (req, res) => {
-  try {
-    const { name, email, phone, subject, message } = req.body;
-
-    if (!name || !email || !message) {
-      return res.status(400).json({ success: false, error: 'Emri, emaili dhe mesazhi janë të detyrueshme' });
-    }
-
-    const newContact = new Contact({
-      name,
-      email,
-      phone,
-      subject,
-      message,
-      createdAt: new Date()
-    });
-
-    const savedContact = await newContact.save();
-    console.log("✓ Mesazh i ri u ruajt:", savedContact._id);
-
-    // Dërgimi i email-it (mund të shtohet logjika këtu nëse dëshironi)
-
-    res.status(201).json({
-      success: true,
-      message: "Mesazhi u dërgua me sukses!",
-      contact: savedContact
-    });
-
-  } catch (error) {
-    console.error("✗ Gabim në ruajtjen e kontaktit:", error);
-    res.status(500).json({ success: false, error: 'Dështoi dërgimi i mesazhit' });
-  }
-});
-
 app.get('/api/contacts', async (req, res) => {
   try {
     const contacts = await Contact.find().sort({ createdAt: -1 });
@@ -211,9 +176,9 @@ app.get('/api/contacts', async (req, res) => {
       contacts: contacts
     });
   } catch (error) {
-    res.status(500).json({ 
+    res.status(500).json({
       success: false,
-      error: 'Dështo marrja e kontakteve' 
+      error: 'Dështo marrja e kontakteve'
     });
   }
 })
@@ -223,19 +188,19 @@ app.get('/api/bookings/:id', async (req, res) => {
   try {
     const booking = await Booking.findById(req.params.id);
     if (!booking) {
-      return res.status(404).json({ 
+      return res.status(404).json({
         success: false,
-        error: 'Rezervimi nuk u gjet' 
+        error: 'Rezervimi nuk u gjet'
       });
     }
-    res.json({ 
+    res.json({
       success: true,
-      booking: booking 
+      booking: booking
     });
   } catch (error) {
-    res.status(500).json({ 
+    res.status(500).json({
       success: false,
-      error: 'Dështo marrja e rezervimit' 
+      error: 'Dështo marrja e rezervimit'
     });
   }
 })
@@ -268,18 +233,18 @@ app.get('/api/services', (req, res) => {
       description: 'Pastrimi profesional i tapeteve dhe mobilieve'
     }
   ]
-  res.json({ 
+  res.json({
     success: true,
-    services: services 
+    services: services
   })
 })
 
 // Error handling middleware
 app.use((err, req, res, next) => {
   console.error('✗ Error:', err)
-  res.status(500).json({ 
+  res.status(500).json({
     success: false,
-    error: 'Gabim i brendshëm i serverit' 
+    error: 'Gabim i brendshëm i serverit'
   })
 })
 
@@ -292,7 +257,7 @@ app.listen(PORT, async () => {
   console.log(`✓ Serveri po xhiron në portin ${PORT}`)
   console.log(`✓ Health check: http://localhost:${PORT}/api/health`)
   console.log(`${'='.repeat(50)}\n`)
-  
+
   // Testo lidhjen e emailit
   console.log('Testim i lidhjes me email...');
   const emailOk = await testEmailConnection();
