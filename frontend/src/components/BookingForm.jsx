@@ -3,8 +3,8 @@ import '../styles/BookingForm.css'
 
 export default function BookingForm() {
 
-  const API = import.meta.env.VITE_API_URL;
-  console.log('API URL:', API); // Debugging line to check the API URL being used
+  const API_URL = '/api';
+  console.log('API URL:', API_URL); 
 
   const [formData, setFormData] = useState({
     name: '',
@@ -43,7 +43,7 @@ export default function BookingForm() {
     setSuccessMessage('')
 
     try {
-      const response = await fetch(`${API}/api/bookings`, {
+      const response = await fetch(`${API_URL}/bookings`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'

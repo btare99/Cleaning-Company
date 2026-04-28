@@ -5,19 +5,23 @@ import Home from './pages/Home'
 import About from './pages/About'
 import Services from './pages/Services'
 import Contact from './pages/Contact'
+import AdminDashboard from './pages/Admin/AdminDashboard'
 import './App.css'
 
 function App() {
+  const isAdmin = window.location.pathname.startsWith('/admin');
+
   return (
     <Router>
-      <Navbar />
+      {!isAdmin && <Navbar />}
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/about" element={<About />} />
         <Route path="/services" element={<Services />} />
         <Route path="/contact" element={<Contact />} />
+        <Route path="/admin" element={<AdminDashboard />} />
       </Routes>
-      <Footer />
+      {!isAdmin && <Footer />}
     </Router>
   )
 }

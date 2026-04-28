@@ -59,7 +59,7 @@ export default function Footer() {
       </div>
 
       <div className="footer-bottom">
-        <p>&copy; 2024 Lalas Cleaning. All rights reserved.</p>
+        <p>&copy; 2026 Lalas Cleaning. Të gjitha të drejtat janë të rezervuara.</p>
       </div>
     </footer>
   )

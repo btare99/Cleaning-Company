@@ -57,14 +57,14 @@ export const getBookingConfirmationEmail = (booking) => {
           <div class="content">
             <h2>Përshëndetje ${booking.name},</h2>
             
-            <p>Faleminderit për zgjedhjen e Lalas Cleaning! Rezervimi juaj ka u konfirmuar dhe është gati për procesim.</p>
+            <p>Faleminderit për zgjedhjen e Lalas Cleaning! Rezervimi juaj është konfirmuar dhe është gati për procesim.</p>
             
             <div class="status-box">
               ✓ <strong>ID Rezervimi:</strong> #${booking._id?.toString().slice(-8) || 'N/A'}
             </div>
             
             <div class="booking-details">
-              <h3 style="margin-top: 0;">📋 Detalet e Rezervimit</h3>
+              <h3 style="margin-top: 0;">📋 Detajet e Rezervimit</h3>
               
               <div class="detail-row">
                 <span class="detail-label">Emri:</span>
@@ -97,7 +97,7 @@ export const getBookingConfirmationEmail = (booking) => {
               </div>
               
               <div class="detail-row">
-                <span class="detail-label">Zona:</span>
+                <span class="detail-label">Siperfaqja:</span>
                 <span class="detail-value">${booking.area}</span>
               </div>
               
@@ -113,12 +113,12 @@ export const getBookingConfirmationEmail = (booking) => {
             <ul>
               <li>✓ Ekipi ynë do t'ju kontaktojë brenda 24 orësh për të konfirmuar përfundimet finale</li>
               <li>✓ Do të zbatojmë të lartën standard të pastrimit me produkte miqësore ndaj mjedisit</li>
-              <li>✓ Shtëpia ose zyrja juaj do të jetë e pastër dhe e mirëmirësitur</li>
+              <li>✓ Shtëpia ose zyrja juaj do të jetë e pastër</li>
             </ul>
             
             <p><strong>Nëse keni pyetje:</strong><br>
             Telefononi: <strong>+355 69 441 4819</strong><br>
-            Email: <strong>info@lalas-cleaning.com</strong></p>
+            Email: <strong>lalas.pastrim.shtepie@gmail.com</strong></p>
             
             <p style="color: #10b981; font-weight: bold;">✓ Garancia 100% - Nëse nuk jeni të kënaqur, do të kthejmë paratë tuaja.</p>
             
@@ -128,7 +128,7 @@ export const getBookingConfirmationEmail = (booking) => {
           </div>
           
           <div class="footer">
-            <p>© 2024 Lalas Cleaning. Të drejtat e autorit janë të rezervuara.</p>
+            <p>© 2026 Lalas Cleaning. Të drejtat e autorit janë të rezervuara.</p>
             <p>Ky email u dërgua për shkak të rezervimit tuaj. Mos u përgjiguni këtij email - përdorni numrin e telefonit ose adresën email më lart.</p>
           </div>
         </div>

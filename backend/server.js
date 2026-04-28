@@ -104,25 +104,12 @@ app.post("/api/bookings", async (req, res) => {
   try {
     const { name, email, phone, service, date, time, area, notes } = req.body;
 
-    // Validim i fushave të detyrueshme
     if (!name || !email || !phone || !service || !date || !time || !area) {
-      return res.status(400).json({ 
-        success: false,
-        error: 'Ju lutem, plotësoni të gjitha fushat e detyrueshme' 
-      });
+      return res.status(400).json({ success: false, error: 'Plotësoni të gjitha fushat' });
     }
 
-    // Validim i formatit të emailit
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(email)) {
-      return res.status(400).json({ 
-        success: false,
-        error: 'Formati i emailit nuk është i vlefshëm' 
-      });
-    }
-
-    // Krijo rezervimin në database
-    const booking = await Booking.create({
+    // 1. RUAJTJA NË DATABASE (Kjo duhet të ndodhë e para)
+    const newBooking = new Booking({
       name,
       email,
       phone,
@@ -131,46 +118,30 @@ app.post("/api/bookings", async (req, res) => {
       time,
       area,
       notes: notes || '',
+      status: 'pending',
       createdAt: new Date()
     });
 
-    console.log("✓ Rezervim i ri ruajtur:", booking._id);
+    const savedBooking = await newBooking.save();
+    console.log("✓ Rezervimi u ruajt në MongoDB:", savedBooking._id);
 
-    // Dërgo email konfirmimi te klienti
+    // 2. DËRGIMI I EMAILEVE (Vetëm pasi u ruajt në DB)
     try {
-      await transporter.sendMail(getBookingConfirmationEmail(booking));
-      console.log('✓ Email konfirmimi u dërgua te:', email);
-    } catch (emailError) {
-      console.error('✗ Gabim në dërgimin e emailit te klienti:', emailError.message);
-    }
-
-    // Dërgo notifikim te administratori
-    try {
-      await transporter.sendMail(getAdminBookingNotification(booking));
-      console.log('✓ Email notifikimi u dërgua te administratorit');
-    } catch (emailError) {
-      console.error('✗ Gabim në dërgimin e emailit te administratorit:', emailError.message);
+      await transporter.sendMail(getBookingConfirmationEmail(savedBooking));
+      await transporter.sendMail(getAdminBookingNotification(savedBooking));
+    } catch (emailErr) {
+      console.error("⚠️ Rezervimi u ruajt, por emaili dështoi:", emailErr.message);
     }
 
     res.status(201).json({
       success: true,
-      message: "Rezervimi u ruajt me sukses! Kontakt në email për konfirmimin e plotë.",
-      booking: {
-        id: booking._id,
-        name: booking.name,
-        email: booking.email,
-        service: booking.service,
-        date: booking.date,
-        time: booking.time
-      }
+      message: "Rezervimi u krye me sukses!",
+      booking: savedBooking
     });
 
   } catch (error) {
-    console.error("✗ Gabim në ruajtjen e rezervimit:", error);
-    res.status(500).json({ 
-      success: false,
-      error: 'Dështo ruajtja e rezervimit. Ju lutem, përpiquni përsëri më vonë.' 
-    });
+    console.error("✗ Gabim kritik:", error);
+    res.status(500).json({ success: false, error: 'Serveri dështoi në ruajtjen e të dhënave' });
   }
 });
 

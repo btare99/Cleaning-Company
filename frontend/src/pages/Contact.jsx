@@ -13,7 +13,7 @@ import {
 import "../styles/contact.css";
 
 export default function Contact() {
-  const API = import.meta.env.VITE_API_URL;
+  const API = import.meta.env.VITE_API_URL || 'http://localhost:5000';
 
   const [formData, setFormData] = useState({
     name: "",
