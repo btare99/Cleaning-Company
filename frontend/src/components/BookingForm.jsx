@@ -81,7 +81,7 @@ export default function BookingForm() {
     <div className="booking-form-container">
       <h2>Rezervo tani</h2>
       <p className="booking-form-subtitle">Rezervo pastrimin në vetëm disa hapa</p>
-      
+
       <form onSubmit={handleSubmit}>
         <div className="form-grid">
           <div className="form-group">

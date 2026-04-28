@@ -50,11 +50,13 @@ export default function Contact() {
         body: JSON.stringify(formData),
       });
 
-      const data = await response.json();
-
       if (!response.ok) {
-        throw new Error(data.error || "Failed to submit contact form");
+        const errorText = await response.text();
+        console.error("❌ Gabim nga serveri:", errorText);
+        throw new Error("Dërgimi dështoi (404/500)");
       }
+
+      const data = await response.json();
 
       setSuccessMessage(
         "Message sent successfully! We will get back to you soon.",

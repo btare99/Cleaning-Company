@@ -38,8 +38,8 @@ app.get('/api/health', (req, res) => {
   res.json({ status: 'Server is running' })
 })
 
-// POST contact form
-app.post('/api/contacts', async (req, res) => {
+// POST contact form (Accepts both singular and plural for safety)
+app.post(['/api/contact', '/api/contacts'], async (req, res) => {
   try {
     const { name, email, phone, subject, message } = req.body;
 
@@ -182,7 +182,6 @@ app.get('/api/contacts', async (req, res) => {
     });
   }
 })
-
 // GET specific booking
 app.get('/api/bookings/:id', async (req, res) => {
   try {
