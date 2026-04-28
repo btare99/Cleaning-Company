@@ -40,14 +40,20 @@ app.get('/api/health', (req, res) => {
 
 // Rruga për kontakte (Shumës)
 app.post('/api/contacts', async (req, res) => {
+  console.log("📥 Kërkesë e re te /api/contacts:", req.body);
   try {
     const { name, email, phone, subject, message } = req.body;
     if (!name || !email || !message) {
-      return res.status(400).json({ success: false, error: 'Fushat kryesore mungojnë' });
+      return res.status(400).json({ success: false, error: 'Mungojnë fushat: name, email ose message' });
     }
+    
+    // Test pa DB:
+    // return res.json({ success: true, message: "Debug: Rruga u gjet!" });
+
     const contact = await Contact.create({ name, email, phone, subject, message, createdAt: new Date() });
     res.status(201).json({ success: true, message: 'OK', contactId: contact._id });
   } catch (err) {
+    console.error("❌ Gabim te /api/contacts:", err.message);
     res.status(500).json({ success: false, error: err.message });
   }
 });

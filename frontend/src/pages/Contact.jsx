@@ -37,15 +37,20 @@ export default function Contact() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    const fullUrl = `${API_URL}/api/contacts`;
+    console.log("🚀 Duke dërguar kërkesën te:", fullUrl);
+    console.log("📦 Të dhënat:", formData);
     setLoading(true);
     setErrorMessage("");
     setSuccessMessage("");
 
     try {
-      const response = await fetch(`${API_URL}/api/contacts`, {
+      const response = await fetch(fullUrl, {
         method: "POST",
+        mode: "cors", // Shtojmë CORS manualisht për siguri
         headers: {
           "Content-Type": "application/json",
+          "Accept": "application/json"
         },
         body: JSON.stringify(formData),
       });
