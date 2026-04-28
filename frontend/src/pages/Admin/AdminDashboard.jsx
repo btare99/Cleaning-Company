@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import './AdminDashboard.css';
 
-const API_URL = '/api';
+const API_URL = import.meta.env.VITE_API_URL || '/api';
 
 /* ── tiny sparkline bar ── */
 const MiniBar = ({ value, max, color }) => (
