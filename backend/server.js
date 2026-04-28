@@ -38,68 +38,28 @@ app.get('/api/health', (req, res) => {
   res.json({ status: 'Server is running' })
 })
 
-// POST contact form (Accepts both singular and plural for safety)
-app.post(['/api/contact', '/api/contacts'], async (req, res) => {
+// Rruga për kontakte (Shumës)
+app.post('/api/contacts', async (req, res) => {
   try {
     const { name, email, phone, subject, message } = req.body;
-
-    // Validim i fushave
-    if (!name || !email || !phone || !subject || !message) {
-      return res.status(400).json({
-        success: false,
-        error: 'Të gjitha fushat janë të detyrueshme'
-      });
+    if (!name || !email || !message) {
+      return res.status(400).json({ success: false, error: 'Fushat kryesore mungojnë' });
     }
+    const contact = await Contact.create({ name, email, phone, subject, message, createdAt: new Date() });
+    res.status(201).json({ success: true, message: 'OK', contactId: contact._id });
+  } catch (err) {
+    res.status(500).json({ success: false, error: err.message });
+  }
+});
 
-    // Validim i formatit të emailit
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(email)) {
-      return res.status(400).json({
-        success: false,
-        error: 'Formati i emailit nuk është i vlefshëm'
-      });
-    }
-
-    // Krijo kontaktin në database
-    const contact = await Contact.create({
-      name,
-      email,
-      phone,
-      subject,
-      message,
-      createdAt: new Date()
-    });
-
-    console.log('✓ Kontakt i ri ruajtur:', contact._id);
-
-    // Dërgo email konfirmimi te klienti
-    try {
-      await transporter.sendMail(getContactReplyEmail(contact));
-      console.log('✓ Email konfirmimi u dërgua te:', email);
-    } catch (emailError) {
-      console.error('✗ Gabim në dërgimin e emailit te klienti:', emailError.message);
-    }
-
-    // Dërgo notifikim te administratori
-    try {
-      await transporter.sendMail(getAdminContactNotification(contact));
-      console.log('✓ Email notifikimi u dërgua te administratorit');
-    } catch (emailError) {
-      console.error('✗ Gabim në dërgimin e emailit te administratorit:', emailError.message);
-    }
-
-    res.status(201).json({
-      success: true,
-      message: 'Kontakti u ruajt me sukses. Do tjua përgjigjemi brenda 24 orësh!',
-      contactId: contact._id
-    });
-
-  } catch (error) {
-    console.error('✗ Gabim në përpunimin e kontaktit:', error);
-    res.status(500).json({
-      success: false,
-      error: 'Dështo përpunimi i formës. Ju lutem, përpiquni përsëri më vonë.'
-    });
+// Rruga për kontakte (Njëjës - për siguri)
+app.post('/api/contact', async (req, res) => {
+  try {
+    const { name, email, phone, subject, message } = req.body;
+    const contact = await Contact.create({ name, email, phone, subject, message, createdAt: new Date() });
+    res.status(201).json({ success: true, message: 'OK', contactId: contact._id });
+  } catch (err) {
+    res.status(500).json({ success: false, error: err.message });
   }
 });
 
