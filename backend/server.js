@@ -39,7 +39,7 @@ app.get('/api/health', (req, res) => {
 })
 
 // POST contact form
-app.post('/api/contact', async (req, res) => {
+app.post('/api/contacts', async (req, res) => {
   try {
     const { name, email, phone, subject, message } = req.body;
 
